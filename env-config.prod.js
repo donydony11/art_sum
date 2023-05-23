@@ -1,0 +1,4 @@
+window.env = {
+    VITE_RAPID_API_ARTICLE_KEY:'b6fed0a774msh6b2b18449403df6p105197jsn759f93861550'
+  };
+  

@@ -18,7 +18,18 @@
   </head>
   <body>
     <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-    <script src="/env-config.js"></script>
+    <script type="module">
+      const script = document.createElement('script');
+      script.type = 'module';
+
+      const isProduction = process.env.NODE_ENV === 'production';
+      const configPath = isProduction ? '/env-config.prod.js' : '/env-config.js';
+
+      script.src = configPath;
+
+      document.body.appendChild(script);
+  
+      import('./src/main.tsx');
+    </script>
   </body>
 </html>

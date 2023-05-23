@@ -8,6 +8,7 @@ const Demo: React.FC = () => {
   const [allArticles, setAllArticles] = useState<{ summary: any; url: string; }[]>([]);
    // @ts-ignore
   const [getSummary, {error, isFetching}] = useLazyGetSummaryQuery();
+  const [copied, setCopied] = useState("")
 
   useEffect(() => {
     const articlesFromLocalStorage = localStorage.getItem('articles');
@@ -39,6 +40,12 @@ const Demo: React.FC = () => {
     }
   };
 
+  const handleCopy = (copyUrl: string) => {
+    setCopied(copyUrl)
+    navigator.clipboard.writeText(copyUrl)
+    setTimeout(() => setCopied(''), 4000)
+  }
+
   return (
     <section className='mt-16 w-full max-w-xl'>
       {/* Search */}
@@ -63,8 +70,8 @@ const Demo: React.FC = () => {
             <div key={`link-${index}`}
             onClick={() => setArticle(item)}
             className='link_card'>
-                <div className='copy_btn'>
-                  <img src={copy} alt='copy_icon' className='w-[40%] h-[40%]'  />
+                <div className='copy_btn' onClick={() => handleCopy(item.url)}  >
+                  <img src={copied === item.url ? tick : copy} alt='copy_icon' className='w-[40%] h-[40%]' />
                 </div>
                 <p className='flex-1 font-satoshi text-blue-700 font-medium text-sm truncate'>
                   {item.url}
